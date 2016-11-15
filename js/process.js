@@ -1,26 +1,5 @@
 'use strict';
 
-function evaluate(argArray, opString) {
-    console.log('evaluating', argArray, opString, justCalculated);
-    //called by numberCrunch
-    //take an array of two number-strings and an operation, and return the mathematical evaluation of the operation performed upon those two numbers
-    argArray[0] = parseFloat(argArray[0]);
-    argArray[1] = parseFloat(argArray[1]);
-    switch (opString) { //do the math here//
-        case ('*'):
-            return argArray[0] * argArray[1];
-        case ('/'):
-            return argArray[0] / argArray[1];
-        case ('+'):
-            return argArray[0] + argArray[1];
-        case ('-'):
-            return argArray[0] - argArray[1];
-        default:
-            //we never get here that I know of, but for fun...
-            return "There are no other cases. What calculator are you even using? Weirdo.";
-    }
-}
-
 function numberCrunch(expression = '') {
     console.log('messily crunching numbers', expression, justCalculated);
     //if we are passed an expression, check it for operators
@@ -45,8 +24,8 @@ function numberCrunch(expression = '') {
         if (expression.includes(symbol)) {
             console.log(symbol, 'found in', expression);
             args = expression.split(symbol);
-            if (symbol === '-' && !args[0]) {
-                //EXCEPTION: treat a first minus-sign as a negative, not a minus-sign
+            if (symbol === '-' && args[0]===symbol) {
+                //EXCEPTION: treat a leading minus-sign as a negative, not an operator
                 console.log('replacing', args[1], 'with', args[1] * (-1));
                 //convert to negative, and place at front of array
                 //move the second argument up one in the array, and cut the array down to only two arguments.
