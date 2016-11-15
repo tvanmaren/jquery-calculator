@@ -1,12 +1,12 @@
 'use strict';
 
 var $screen;
-var justCalculated;
+var readyForMore;
 
 $(function() {
 
     $screen = $('#screen');
-    justCalculated = false;
+    readyForMore = false;
 
     $('#buttons-container').click(handleClick);
 });
@@ -15,9 +15,11 @@ function handleClick(event) {
     var $button = $(event.target);
     if ($button.is('span')) {
         if ($button.attr('class') === 'operator') {
-            return perform($button.attr('id') || $button.text()); //perform operation
+          //perform operation
+            perform($button.attr('id') || $button.text());
         } else {
-            return pushToScreen($button.text());
+            pushToScreen($button.text());
         }
     }
+    return;
 }

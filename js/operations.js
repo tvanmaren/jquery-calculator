@@ -3,27 +3,25 @@
 function perform(operation) {
     console.log('operation', operation);
     //interprets & follows through on non-number buttons
-    justCalculated = false;
+    readyForMore = false;
     switch (operation) {
         case 'clear':
             emptyScreen();
-            return;
+            break;
         case 'equals':
-            justCalculated = numberCrunch();
-            return justCalculated;
+            readyForMore = inputCheck();
+            break;
         default:
             console.log(operation);
             pushToScreen(operation);
-            return;
     }
+    return;
 }
 
 function evaluate(argArray, opString) {
-    console.log('evaluating', argArray, opString, justCalculated);
-    //called by numberCrunch
-    //take an array of two number-strings and an operation, and return the mathematical evaluation of the operation performed upon those two numbers
     argArray[0] = parseFloat(argArray[0]);
     argArray[1] = parseFloat(argArray[1]);
+
     switch (opString) { //do the math here//
         case ('*'):
             return argArray[0] * argArray[1];
@@ -34,7 +32,19 @@ function evaluate(argArray, opString) {
         case ('-'):
             return argArray[0] - argArray[1];
         default:
-            //we never get here that I know of, but for fun...
-            return "That's not a valid mathematical symbol! What are you doing?";
+            return "ERROR! Invalid Operator!";
     }
+}
+
+function splitAtOperator(expression, operator) {
+    var argPieces = expression.split(operator);
+    return argPieces;
+}
+
+function convertNegatives(argArray) {
+    if (hasLeadingMinus(argArray)) {
+        argArray.splice(0, 1); //remove subtraction operator
+        argArray[0] *= (-1); //convert
+    }
+    return argArray;
 }

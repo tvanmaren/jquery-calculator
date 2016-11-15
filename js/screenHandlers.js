@@ -2,14 +2,14 @@
 
 function pushToScreen(char) {
     //take the input character and push it onto the calculator screen
-    if (!validChar(char)) {
-        $screen.text('Error');
+    if (!isValidChar(char)) {
+        setScreen('Error');
     }
 
-    if (canOverride(char)) {
+    if (shouldReplaceScreen(char)) {
         emptyScreen();
-        justCalculated = false;
-        $screen.text(char);
+        readyForMore = false;
+        setScreen(char);
     } else {
         appendToScreen(char);
     }
@@ -22,6 +22,15 @@ function emptyScreen() {
 }
 
 function appendToScreen(char) {
-  $screen.text($screen.text() + char);
+  setScreen(grabScreen() + char);
+  return;
+}
+
+function grabScreen() {
+  return $screen.text();
+}
+
+function setScreen(text) {
+  $screen.text(text);
   return;
 }
