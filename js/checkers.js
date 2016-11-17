@@ -64,7 +64,7 @@ function isValidChar(char) {
 function shouldReplaceScreen(char) {
     //whether to replace(true) or add to(false) the screen
     return (readyForMore ||
-        $screen.text() === 'Error' ||
+        $screen.val() === 'Error' ||
         char === 'Error');
 }
 

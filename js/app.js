@@ -9,6 +9,7 @@ $(function() {
     readyForMore = false;
 
     $('#buttons-container').click(handleClick);
+    $('#screen').keypress(handleKeyboard);
 });
 
 function handleClick(event) {
@@ -22,4 +23,12 @@ function handleClick(event) {
         }
     }
     return;
+}
+
+function handleKeyboard(event) {
+  var key=event.which;
+  console.log(key);
+  if (key===13) {
+    $('#equals').trigger('click');
+  }
 }

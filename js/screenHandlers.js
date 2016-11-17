@@ -17,7 +17,7 @@ function pushToScreen(char) {
 }
 
 function emptyScreen() {
-    $screen.empty();
+    $screen.val('');
     return;
 }
 
@@ -27,10 +27,10 @@ function appendToScreen(char) {
 }
 
 function grabScreen() {
-  return $screen.text();
+  return $screen.val();
 }
 
 function setScreen(text) {
-  $screen.text(text);
+  $screen.val(text);
   return;
 }
