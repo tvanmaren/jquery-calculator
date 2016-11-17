@@ -2,11 +2,11 @@
 
 function evaluate(expressionArray) {
   let operation=expressionArray.pop();
-  return ([convertToRPN(expressionArray[0]),convertToRPN(expressionArray[1]),operation]);
+  return ([attemptRPN(expressionArray[0]),attemptRPN(expressionArray[1]),operation]);
 }
 
-function convertToRPN(expression) {
-  let expressionRPN=reduce(expression);
+function attemptRPN(expression) {
+  let expressionRPN=mapToRPN(expression);
   if (expressionRPN) {
     return evaluate(expressionRPN);
   } else {
@@ -14,7 +14,7 @@ function convertToRPN(expression) {
   }
 }
 
-function reduce(expression) {
+function mapToRPN(expression) {
   //returns either an array of two expressions and the operation to perform between them, or false
   const symbols = {
       '/': '÷',
