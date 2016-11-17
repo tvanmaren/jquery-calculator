@@ -9,7 +9,7 @@ $(function() {
     readyForMore = false;
 
     $('#buttons-container').click(handleClick);
-    $('#screen').keypress(handleKeyboard);
+    $('#screen').keyup(handleKeyboard);
 });
 
 function handleClick(event) {
@@ -30,5 +30,8 @@ function handleKeyboard(event) {
   console.log(key);
   if (key===13) {
     $('#equals').trigger('click');
+  }
+  if (key===27 || 0) {
+    $('#clear').trigger('click');
   }
 }
