@@ -8,7 +8,7 @@ function pushToScreen(char) {
 
     if (shouldReplaceScreen(char)) {
         emptyScreen();
-        readyForMore = false;
+        readyForMore = true;
         setScreen(char);
     } else {
         appendToScreen(char);
@@ -18,6 +18,7 @@ function pushToScreen(char) {
 
 function emptyScreen() {
     $screen.val('');
+    readyForMore=true;
     return;
 }
 

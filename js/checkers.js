@@ -36,7 +36,7 @@ function inputCheck(expression = '') {
 
       if (isValidInput(argArray)) {
         //if we found an operator, we're looking at the screen, and we have a base case of input
-        readyForMore = true;
+        readyForMore = false;
         pushToScreen(evaluate(argArray, symbols[symbol]));
         return true;
       } else {
@@ -63,9 +63,9 @@ function isValidChar(char) {
 
 function shouldReplaceScreen(char) {
   //whether to replace(true) or add to(false) the screen
-  return (readyForMore ||
+  return ((!readyForMore ||
     $screen.val() === 'Error' ||
-    char === 'Error');
+    char === 'Error'));
 }
 
 function hasLeadingMinus(argArray) {
@@ -85,12 +85,25 @@ function isValidInput(argArray) {
 
 function isValidKey(key) {
   if (shiftKeyDown) {
-    console.log('shift is ACTIVE');
-    return ((key > 36 && key < 41) ||
-      key === 187);
+    return ((keyVals.arrows.includes(key)) ||
+      key === keyVals.plus);
   } else {
-    return ((key > 47 && key < 58) ||
-      (key > 36 && key < 41) ||
-      [0, 8, 13, 16, 27, 88, 189, 191].includes(key));
+    return ((keyVals.numbers.includes(key)) ||
+      (keyVals.arrows.includes(key)) ||
+      key===keyVals.ffescape ||
+      key===keyVals.backspace ||
+      key===keyVals.enter ||
+      key===keyVals.escape ||
+      key===keyVals.times ||
+      key===keyVals.minus ||
+      key===keyVals.divideby);
   }
+}
+
+function isActionKey(key) {
+  return ((key===keyVals.enter) || (key===keyVals.escape) || (key===keyVals.backspace) || keyVals.arrows.includes(key));
+}
+
+function isOperatorKey(key) {
+  return ((key===keyVals.plus) || (key===keyVals.minus) || (key===keyVals.times) || (key===keyVals.divideby));
 }

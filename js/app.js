@@ -3,11 +3,24 @@
 var $screen;
 var readyForMore;
 var shiftKeyDown = false;
+const keyVals = {
+  'ffescape': 0,
+  'backspace': 8,
+  'enter': 13,
+  'shift': 16,
+  'escape': 27,
+  'times': 88,
+  'plus': 187,
+  'minus': 189,
+  'divideby': 191,
+  'arrows': [37, 38, 39, 40],
+  'numbers': [48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+}
 
 $(function () {
 
   $screen = $('#screen');
-  readyForMore = false;
+  readyForMore = true;
 
   $('#buttons-container').click(handleClick);
   $('#screen').keydown(handleKeyDown);
@@ -30,9 +43,8 @@ function handleClick(event) {
 
 function handleKeyDown(event) {
   var key = event.which;
-  console.log(key);
 
-  if (key === 16) {
+  if (key === keyVals.shift) {
     shiftKeyDown = true;
     return true;
   }
@@ -42,30 +54,43 @@ function handleKeyDown(event) {
     return false;
   }
 
-  if (isOperationKey(key)) {
-    switch (key) {
-    case (13):
-      $('#equals').trigger('click');
-      return;
-    case (27):
-      $('#clear').trigger('click');
-      return;
-    case (0): //fix for firefox, where ESC registers as 0
-      $('#clear').trigger('click');
-      return;
+  if (isActionKey(key)) {
+    if (keyVals.arrows.includes(key)) {
+      return true;
+    } else {
+      switch (key) {
+      case (keyVals.backspace):
+        return true;
+      case (keyVals.enter):
+        $('#equals').trigger('click');
+        return;
+      case (keyVals.escape):
+        $('#clear').trigger('click');
+        return;
+      case (keyVals.ffescape): //fix for firefox, where ESC registers as 0
+        $('#clear').trigger('click');
+        return;
+      }
     }
   }
-  return true;
+
+  if (isOperatorKey(key)) {
+    return true;
+  }
+
+  else {
+    console.log(key);
+    event.preventDefault();
+    let char = String.fromCharCode(key);
+    pushToScreen(char);
+    return false;
+  }
 }
 
 function shiftOff(event) {
   var key = event.which;
-  if (key === 16) {
+  if (key === keyVals.shift) {
     shiftKeyDown = false;
   }
   return;
-}
-
-function isOperationKey(key) {
-  return ((key===13) || (key===27));
 }

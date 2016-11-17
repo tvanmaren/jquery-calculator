@@ -3,7 +3,7 @@
 function perform(operation) {
     console.log('operation', operation);
     //interprets & follows through on non-number buttons
-    readyForMore = false;
+    readyForMore = true;
     switch (operation) {
         case 'clear':
             emptyScreen();
